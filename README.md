@@ -1,5 +1,5 @@
-# prepration
-i got an Ubuntu 25 VM on VMWare Fusion
+# Preparation
+Ubuntu 25 ARM on WMWare Fusion
 
 ### Install Required Dependencies
 ```bash

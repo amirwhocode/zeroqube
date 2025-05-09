@@ -1,0 +1,80 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ngshare-config
+  namespace: 02jh  # This matches your JupyterHub namespace
+data:
+  ngshare.py: |
+    # Debug setting - helpful during initial setup
+    c.JupyterHubNgshare.debug = True
+    
+    # Database location - SQLite is used for simplicity
+    c.JupyterHubNgshare.db_url = 'sqlite:////srv/ngshare/ngshare.db'
+    
+    # This defines the service prefix in the URL
+    c.JupyterHubNgshare.service_prefix = '/services/ngshare/'
+    
+    # Hub API connection details - needed for authentication
+    c.JupyterHubNgshare.hub_api_url = 'http://hub:8081/hub/api'
+    
+    # API token for authentication - this must match the token in config.yaml
+    c.JupyterHubNgshare.hub_api_token = 'REPLACE_WITH_API_TOKEN'
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ngshare-pvc
+  namespace: 02jh
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ngshare
+  namespace: 02jh
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ngshare
+  template:
+    metadata:
+      labels:
+        app: ngshare
+    spec:
+      containers:
+      - name: ngshare
+        image: illusive/ngshare:latest
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: ngshare-config
+          mountPath: /etc/jupyterhub/ngshare_config.py
+          subPath: ngshare.py
+        - name: ngshare-data
+          mountPath: /srv/ngshare
+      volumes:
+      - name: ngshare-config
+        configMap:
+          name: ngshare-config
+      - name: ngshare-data
+        persistentVolumeClaim:
+          claimName: ngshare-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ngshare
+  namespace: 02jh
+spec:
+  selector:
+    app: ngshare
+  ports:
+  - port: 8080
+    targetPort: 8080
+  type: ClusterIP
