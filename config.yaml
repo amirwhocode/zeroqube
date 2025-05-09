@@ -1,0 +1,7 @@
+hub:
+  db:
+    type: sqlite-memory
+  authenticator:
+    class: jupyterhub.auth.PAMAuthenticator
+    admin_users:
+      - mini
