@@ -68,13 +68,13 @@ helm upgrade --cleanup-on-fail \
   --install redspot jupyterhub/jupyterhub \
   --namespace 02jh \
   --create-namespace \
-  --values config.yaml \
+  --values hub.yaml \
   --timeout 30m0s
 ```
 
 ```bash
 minikube kubectl -- get pods -n 02jh
-```
+```-
 
 ```bash
 minikube kubectl -- get service proxy-public -n 02jh
@@ -83,7 +83,27 @@ minikube kubectl -- get service proxy-public -n 02jh
 ```bash
 minikube service list
 minikube ip
+minikube kubectl cluster-info
+minikube kubectl -- get service --namespace 02jh
 ```
+
+## install ngshare
+```bash
+helm repo add ngshare https://libretexts.github.io/ngshare-helm-repo/
+helm repo update
+```
+
+```bash
+helm install ngshare ngshare/ngshare -f ngshare.yaml --namespace 02jh
+```
+
+```bash
+helm upgrade --cleanup-on-fail \
+  redspot jupyterhub/jupyterhub \
+  --namespace 02jh \
+  --values hub.yaml \
+  --timeout 30m0s
+  ```
 
 ## Debug
 
@@ -94,3 +114,7 @@ minikube kubectl -- logs hub-69794884d5-d5vrz -n 02jh
 ```bash
 minikube kubectl -- describe pod hub-69794884d5-d5vrz -n 02jh
 ```
+
+
+
+helm upgrade
