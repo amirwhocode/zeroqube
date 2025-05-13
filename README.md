@@ -74,7 +74,7 @@ helm upgrade --cleanup-on-fail \
 
 ```bash
 minikube kubectl -- get pods -n 02jh
-```-
+```
 
 ```bash
 minikube kubectl -- get service proxy-public -n 02jh
