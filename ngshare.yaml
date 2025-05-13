@@ -1,4 +1,5 @@
 ngshare:
   hub_api_token: demo_token_9wRp0h4BLzAnC88jjBfpH0fa4QV9tZNI
+  hub_api_url: http://hub.default.svc.cluster.local:8081/hub/api
   admins:
     - mini

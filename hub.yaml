@@ -11,7 +11,7 @@ hub:
     ngshare.py: |
       c.JupyterHub.services.append({
         'name': 'ngshare',
-        'url': 'http://ngshare:8080',
+        'url': 'http://ngshare.default.svc.cluster.local:8080',
         'api_token': 'demo_token_9wRp0h4BLzAnC88jjBfpH0fa4QV9tZNI',
         'oauth_no_confirm': True})
 singleuser:
