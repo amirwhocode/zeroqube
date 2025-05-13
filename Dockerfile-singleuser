@@ -4,4 +4,4 @@ FROM jupyter/minimal-notebook:hub-3.0.0
 RUN python3 -m pip install ngshare_exchange --no-cache-dir
 
 # Configure nbgrader
-COPY nbgrader_config.py /etc/jupyter/nbgrader_config.py
+COPY conf/nbgrader_config.py /etc/jupyter/nbgrader_config.py

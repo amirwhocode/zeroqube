@@ -1,8 +1,7 @@
-# Deploy JupyterHub and ngshare on Minikube via Helm on Ubuntu VM
+# Deploy JupyterHub and ngshare on Minikube via Helm on Ubuntu VM compatible with Apple Silicon and ARM Architecture
 This guide helps you set up Minikube, Docker, and Helm on your Ubuntu system. The setup is split into two parts: the first script installs Docker, and the second script installs Minikube and Helm after a reboot.
 
 ## Quick Setup
-### Step One
 Run the first script (install_prereqs.sh) to install Docker and required tools:
 ```bash
 chmod +x prereqs.sh
@@ -10,89 +9,28 @@ chmod +x prereqs.sh
 ```
 Now reboot or log out and log back in to apply Docker group changes.
 
-### Step Two
 After rebooting, run the second script (install.sh) to:
 - Install Minikube and Helm
 - Start the Minikube cluster
 - Deploy JupyterHub and ngshare using Helm
 
 ```bash
-chmod +x setup_minikube_helm.sh
+chmod +x install.sh
 ./install.sh
 ```
 
-That's it.
+## All done! Now go build something great! 🚀
 
+# Debug
 
-
-
-
-
-
-#################################
-# Old
-# Preparation
-Ubuntu 25 ARM on WMWare Fusion
-
-### Install Required Dependencies
 ```bash
-sudo apt update
-sudo apt upgrade
-sudo apt install -y curl apt-transport-https ca-certificates
+minikube kubectl -- logs hub-69794884d5-d5vrz -n 02jh
 ```
 
-### Install a Container Runtime (Docker)
 ```bash
-sudo apt install -y docker.io
-sudo usermod -aG docker $USER
-newgrp docker
+minikube kubectl -- describe pod hub-69794884d5-d5vrz -n 02jh
 ```
 
-### Download and Install Minikube
-```bash
-curl -LO https://github.com/kubernetes/minikube/releases/latest/download/minikube-linux-arm64
-sudo install minikube-linux-arm64 /usr/local/bin/minikube && rm minikube-linux-arm64
-```
-
-### Start Minikube with Resource Allocation
-```bash
-minikube start \
---kubernetes-version stable \
---nodes 3 \
---cpus 3 \
---memory 6144 \
---cni calico
-```
-
-### Test if your cluster is initialized. The response should list two running nodes
-```bash
-minikube kubectl get node
-```
-
-### Install Helm (Kubernetes Package Manager)
-```bash
-curl https://raw.githubusercontent.com/helm/helm/HEAD/scripts/get-helm-3 | bash
-helm version
-```
-
-### Make Helm aware of the JupyterHub Helm chart repository
-```bash
-helm repo add jupyterhub https://hub.jupyter.org/helm-chart/
-helm repo update
-```
-
-# Deploying JupyterHub on Minikube with Helm
-
-This guide shows how to install and manage JupyterHub on a Minikube Kubernetes cluster using Helm.
-
-## Prerequisites
-
-- [Minikube](https://minikube.sigs.k8s.io/docs/)
-- [Helm](https://helm.sh/docs/)
-- Kubernetes CLI (`kubectl`)
-- `config.yaml` file with your JupyterHub configuration
-
-## Installation
 
 Run the following Helm command to install or upgrade JupyterHub:
 
@@ -120,16 +58,6 @@ minikube kubectl cluster-info
 minikube kubectl -- get service --namespace 02jh
 ```
 
-## install ngshare
-```bash
-helm repo add ngshare https://libretexts.github.io/ngshare-helm-repo/
-helm repo update
-```
-
-```bash
-helm install ngshare ngshare/ngshare -f ngshare.yaml --namespace 02jh
-```
-
 ```bash
 helm upgrade --cleanup-on-fail \
   redspot jupyterhub/jupyterhub \
@@ -137,17 +65,23 @@ helm upgrade --cleanup-on-fail \
   --values hub.yaml \
   --timeout 30m0s
   ```
-
-## Debug
-
+### Start Minikube with Resource Allocation
 ```bash
-minikube kubectl -- logs hub-69794884d5-d5vrz -n 02jh
+minikube start \
+--kubernetes-version stable \
+--nodes 3 \
+--cpus 3 \
+--memory 6144 \
+--cni calico
 ```
 
+### Test if your cluster is initialized. The response should list two running nodes
 ```bash
-minikube kubectl -- describe pod hub-69794884d5-d5vrz -n 02jh
+minikube kubectl get node
 ```
 
+Links:
+- [Minikube](https://minikube.sigs.k8s.io/docs/)
+- [Helm](https://helm.sh/docs/)
 
 
-helm upgrade

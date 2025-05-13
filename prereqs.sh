@@ -28,5 +28,7 @@ sudo apt install -y docker.io
 # ✅ Needs sudo: Add current user to the Docker group for non-root access
 sudo usermod -aG docker "$USER"
 
+# newgrp docker       IDK
+
 # ℹ️ Inform the user to re-login for Docker group to take effect
 echo "➡️ Du musst dich ab- und wieder anmelden, damit die Docker-Gruppe aktiv wird."

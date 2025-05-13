@@ -7,7 +7,7 @@ set -e  # Stop the script immediately if any command fails
 
 echo "📦 MiniKube wird installiert..."
 
-# 📥 Download Minikube binary (ARM64 version – update if using x86_64!)
+# 📥 Download Minikube binary (ARM64 version)
 curl -LO https://github.com/kubernetes/minikube/releases/latest/download/minikube-linux-arm64
 
 # ✅ Needs sudo: Install binary to system path
@@ -27,7 +27,7 @@ curl https://raw.githubusercontent.com/helm/helm/HEAD/scripts/get-helm-3 | bash
 
 
 # ================================
-# 📦 Run ngshare on ARM64
+# 📦 To be able run ngshare on ARM64
 # ================================
 echo "📦 QEMU wird installiert..."
 
