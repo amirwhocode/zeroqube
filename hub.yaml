@@ -1,12 +1,23 @@
 hub:
   db:
     type: sqlite-memory
-
   config:
     Authenticator:
       admin_users:
         - mini
-      allowed_users:
-        - enduser
     LocalAuthenticator:
       create_system_users: true
+  extraConfig:
+    ngshare.py: |
+      c.JupyterHub.services.append({
+        'name': 'ngshare',
+        'url': 'http://ngshare:8080',
+        'api_token': 'demo_token_9wRp0h4BLzAnC88jjBfpH0fa4QV9tZNI',
+        'oauth_no_confirm': True})
+singleuser:
+  image:
+    name: ngshare-singleuser-sample
+    tag: 0.0.1
+  networkPolicy:
+    egressAllowRules:
+     privateIPs: true

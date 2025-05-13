@@ -1,3 +1,36 @@
+# Deploy JupyterHub and ngshare on Minikube via Helm on Ubuntu VM
+This guide helps you set up Minikube, Docker, and Helm on your Ubuntu system. The setup is split into two parts: the first script installs Docker, and the second script installs Minikube and Helm after a reboot.
+
+## Quick Setup
+### Step One
+Run the first script (install_prereqs.sh) to install Docker and required tools:
+```bash
+chmod +x prereqs.sh
+./prereqs.sh
+```
+Now reboot or log out and log back in to apply Docker group changes.
+
+### Step Two
+After rebooting, run the second script (install.sh) to:
+- Install Minikube and Helm
+- Start the Minikube cluster
+- Deploy JupyterHub and ngshare using Helm
+
+```bash
+chmod +x setup_minikube_helm.sh
+./install.sh
+```
+
+That's it.
+
+
+
+
+
+
+
+#################################
+# Old
 # Preparation
 Ubuntu 25 ARM on WMWare Fusion
 
@@ -25,9 +58,9 @@ sudo install minikube-linux-arm64 /usr/local/bin/minikube && rm minikube-linux-a
 ```bash
 minikube start \
 --kubernetes-version stable \
---nodes 2 \
---cpus 4 \
---memory 8192 \
+--nodes 3 \
+--cpus 3 \
+--memory 6144 \
 --cni calico
 ```
 

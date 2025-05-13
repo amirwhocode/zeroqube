@@ -1,5 +1,4 @@
 ngshare:
-  hub_api_token: 123456789AaZz
-  hub_api_url: 192.186.49.2:30599/hub/api
+  hub_api_token: demo_token_9wRp0h4BLzAnC88jjBfpH0fa4QV9tZNI
   admins:
     - mini
