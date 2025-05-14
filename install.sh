@@ -54,7 +54,6 @@ echo "📦 Helm Charts werden hinzugefügt..."
 # Add required Helm repositories
 helm repo add jupyterhub https://jupyterhub.github.io/helm-chart/
 helm repo add ngshare https://LibreTexts.github.io/ngshare-helm-repo/
-# TODO: it fetch amd64 compatible version and failed on arm64, try on windows laptop
 # Update local Helm chart metadata
 helm repo update
 
